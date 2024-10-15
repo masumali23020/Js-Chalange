@@ -1,0 +1,9 @@
+details {
+  position: relative;
+}
+details ul {
+  position: absolute;
+}
+details summary {
+  list-style: none;
+}

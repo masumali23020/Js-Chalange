@@ -23,8 +23,7 @@ function mouseMove(e){
 
     card.style.top = (card.offsetTop - newY) + 'px'
     card.style.left = (card.offsetLeft - newX) + 'px'
-    console.log({newX, newY});
-    // console.log({startX, startY});
+   
 }
 
 function mouseUp(e){
