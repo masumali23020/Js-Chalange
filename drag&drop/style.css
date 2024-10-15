@@ -1,0 +1,18 @@
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+#container {
+  background-color: #212128;
+  background-image: linear-gradient(#292a38 0.1em transparent 0.1em);
+  background-size: 4em 4em;
+  height: 100vh;
+}
+#card {
+  width: 400px;
+  height: 400px;
+  background-color: #38af6a;
+  cursor: pointer;
+  position: fixed;
+}
