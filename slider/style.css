@@ -1,0 +1,84 @@
+body {
+  background-color: #222438;
+  margin: 0;
+  font-family: Poppins;
+}
+main {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: repeating-linear-gradient(
+      to right,
+      transparent 0 50px,
+      #fff1 50px 51px
+    ),
+    repeating-linear-gradient(to bottom, transparent 0 50px, #fff1 50px 51px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+.left {
+  font-size: 40px;
+  font-weight: 700;
+  color: darkturquoise;
+  cursor: pointer;
+}
+
+.arrow {
+  height: 150px;
+  cursor: pointer;
+  color: darkorange;
+}
+
+.right {
+  transform: rotate(180deg);
+  font-size: 40px;
+  font-weight: 700;
+  color: darkturquoise;
+  cursor: pointer;
+}
+
+.frame {
+  width: 800px;
+  height: 500px;
+  overflow: hidden;
+  background: #000;
+}
+
+.slider {
+  display: flex;
+  transition: all 1s ease;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.f-btn {
+  display: flex;
+  gap: 30px;
+}
+
+.button {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid white;
+  cursor: pointer;
+}
