@@ -1,6 +1,6 @@
 const root = document.querySelector('#root')
 const btn = document.querySelector('#btn');
-console.log(btn);
+const output = document.querySelector('#output');
 
 
 window.onload = () => {
@@ -10,7 +10,8 @@ const main = () => {
 
   btn.addEventListener("click", ()=> {
     const bgColor = genarateRgbColor();
-    return   root.style.backgroundColor = bgColor
+    root.style.backgroundColor = bgColor;
+    output.value = bgColor
     
   })
 
@@ -21,5 +22,5 @@ const genarateRgbColor = () => {
   const green = Math.floor(Math.random() * 255)
   const blue = Math.floor(Math.random() * 255)
 
-  return `rgb(${red}, ${green}, ${blue})`
+  return `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`
 }
