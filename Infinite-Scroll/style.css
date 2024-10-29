@@ -1,0 +1,28 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.wraper {
+  width: 90%;
+  max-width: 1556px;
+  margin-inline: auto;
+  display: flex;
+  gap: 5px;
+  border: 1px solid black;
+  position: relative;
+  height: 100px;
+  margin-top: 5rem;
+}
+@keyframes scrooling (
+  to
+)
+.item {
+  width: 200px;
+  height: 100px;
+  background-color: aquamarine;
+  position: absolute;
+  left: 100%;
+}
