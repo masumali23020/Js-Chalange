@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      .container {
+        width: 70%;
+        margin: 0 auto;
+      }
+
+      .invoice-header h1 {
+        text-align: center;
+      }
+
+      .invoice-form div,
+      .items-section div {
+        margin: 10px 0;
+      }
+
+      .items-section table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .items-section table th,
+      .items-section table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+
+      .invoice-footer {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      #invoicePreview {
+        display: none;
+        margin-top: 40px;
+      }
+
+      .invoice-content {
+        padding: 20px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="invoice-header">
+        <h1>Invoice Generator</h1>
+      </div>
+
+      <div class="invoice-form">
+        <div>
+          <label for="customerName">Customer Name:</label>
+          <input
+            type="text"
+            id="customerName"
+            placeholder="Enter customer name"
+          />
+        </div>
+        <div>
+          <label for="invoiceDate">Invoice Date:</label>
+          <input type="date" id="invoiceDate" />
+        </div>
+        <div>
+          <label for="invoiceNumber">Invoice Number:</label>
+          <input type="text" id="invoiceNumber" placeholder="Invoice number" />
+        </div>
+      </div>
+
+      <div class="items-section">
+        <h3>Items</h3>
+        <table id="itemsTable">
+          <thead>
+            <tr>
+              <th>SL</th>
+              <th>Description</th>
+              <th>Rate per villa</th>
+              <th>Previous work %</th>
+              <th>Current work %</th>
+              <th>Total</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Items will be added here -->
+          </tbody>
+        </table>
+        <button id="addItemBtn">Add Item</button>
+      </div>
+
+      <div class="invoice-footer">
+        <h3>Total: $<span id="totalAmount">0.00</span></h3>
+        <button id="generateInvoiceBtn">Generate Invoice</button>
+        <button id="downloadInvoiceBtn">Download Invoice</button>
+      </div>
+    </div>
+
+    <div id="invoicePreview" class="invoice-preview">
+      <h2>Invoice Preview</h2>
+      <div class="invoice-content">
+        <!-- Invoice content will be displayed here after generation -->
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      const { jsPDF } = window.jspdf;
+
+      // Add item functionality
+      document.getElementById("addItemBtn").addEventListener("click", () => {
+        const tableBody = document
+          .getElementById("itemsTable")
+          .getElementsByTagName("tbody")[0];
+        const row = tableBody.insertRow();
+        const itemCount = tableBody.rows.length;
+
+        row.innerHTML = `
+            <td>${itemCount}</td>
+            <td><input type="text" class="description" placeholder="Item description" /></td>
+            <td><input type="number" class="rate" placeholder="Rate" /></td>
+            <td><input type="number" class="previousPercent" /></td>
+            <td><input type="number" class="currentPercent" placeholder="Current work %" /></td>
+            <td><input type="text" class="total" disabled /></td>
+            <td><button class="removeItemBtn">Remove</button></td>
+        `;
+
+        // Attach remove item event
+        row.querySelector(".removeItemBtn").addEventListener("click", () => {
+          row.remove();
+          updateTotal();
+        });
+
+        // Attach input event to calculate total for the item
+        row.querySelectorAll("input").forEach((input) => {
+          input.addEventListener("input");
+        });
+
+        updateTotal();
+      });
+
+      // Update total amount
+      function updateTotal() {
+        const rows = document
+          .getElementById("itemsTable")
+          .getElementsByTagName("tbody")[0].rows;
+        let totalAmount = 0;
+
+        Array.from(rows).forEach((row) => {
+          const rate = parseFloat(row.querySelector(".rate").value) || 0;
+          const previousPercent = parseFloat(
+            (row.querySelector(".previousPercent").value = 100)
+          );
+          const currentPercent =
+            parseFloat(row.querySelector(".currentPercent").value) || 0;
+          // calcule PrevWork
+
+          const PrevWork = previousPercent - currentPercent;
+          row.querySelector(".previousPercent").value = PrevWork;
+          console.log(currentPercent, "currentPercent");
+          console.log(previousPercent);
+          // calculete total price
+          const total = ((rate * currentPercent) / 100).toFixed(2);
+          row.querySelector(".total").value = total;
+          totalAmount += parseFloat(total);
+        });
+
+        document.getElementById("totalAmount").textContent =
+          totalAmount.toFixed(2);
+      }
+
+      // Generate invoice preview
+      document
+        .getElementById("generateInvoiceBtn")
+        .addEventListener("click", () => {
+          const customerName = document.getElementById("customerName").value;
+          const invoiceDate = document.getElementById("invoiceDate").value;
+          const invoiceNumber = document.getElementById("invoiceNumber").value;
+          const tableBody = document
+            .getElementById("itemsTable")
+            .getElementsByTagName("tbody")[0];
+          const rows = tableBody.rows;
+          let invoiceContent = `
+            <h3>Invoice</h3>
+            <p><strong>Customer Name:</strong> ${customerName}</p>
+            <p><strong>Invoice Number:</strong> ${invoiceNumber}</p>
+            <p><strong>Invoice Date:</strong> ${invoiceDate}</p>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Rate</th>
+                        <th>Previous %</th>
+                        <th>Current %</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+          Array.from(rows).forEach((row) => {
+            const description = row.querySelector(".description").value;
+            const rate = row.querySelector(".rate").value;
+            const previousPercent = row.querySelector(".previousPercent").value;
+            const currentPercent = row.querySelector(".currentPercent").value;
+            const total = row.querySelector(".total").value;
+
+            invoiceContent += `
+                <tr>
+                    <td>${description}</td>
+                    <td>${rate}</td>
+                    <td>${previousPercent}</td>
+                    <td>${currentPercent}</td>
+                    <td>${total}</td>
+                </tr>
+            `;
+          });
+
+          invoiceContent += `
+            </tbody>
+        </table>
+        <h3>Total: $${document.getElementById("totalAmount").textContent}</h3>
+        `;
+
+          document.getElementById("invoicePreview").style.display = "block";
+          document.querySelector(".invoice-content").innerHTML = invoiceContent;
+        });
+
+      // Download invoice as PDF
+      document
+        .getElementById("downloadInvoiceBtn")
+        .addEventListener("click", () => {
+          const doc = new jsPDF();
+          const customerName = document.getElementById("customerName").value;
+          const invoiceDate = document.getElementById("invoiceDate").value;
+          const invoiceNumber = document.getElementById("invoiceNumber").value;
+          const tableBody = document
+            .getElementById("itemsTable")
+            .getElementsByTagName("tbody")[0];
+          const rows = tableBody.rows;
+
+          doc.text(`Invoice - ${invoiceNumber}`, 10, 10);
+          doc.text(`Customer: ${customerName}`, 10, 20);
+          doc.text(`Invoice Date: ${invoiceDate}`, 10, 30);
+          doc.text(
+            `Total: $${document.getElementById("totalAmount").textContent}`,
+            10,
+            40
+          );
+
+          let yPosition = 50;
+          Array.from(rows).forEach((row) => {
+            const description = row.querySelector(".description").value;
+            const rate = row.querySelector(".rate").value;
+            const previousPercent = row.querySelector(".previousPercent").value;
+            const currentPercent = row.querySelector(".currentPercent").value;
+            const total = row.querySelector(".total").value;
+
+            doc.text(`Description: ${description}`, 10, yPosition);
+            doc.text(`Rate: ${rate}`, 60, yPosition);
+            doc.text(`Previous %: ${previousPercent}`, 110, yPosition);
+            doc.text(`Current %: ${currentPercent}`, 160, yPosition);
+            doc.text(`Total: ${total}`, 210, yPosition);
+
+            yPosition += 10;
+          });
+
+          doc.save("invoice.pdf");
+        });
+    </script>
+  </body>
+</html>
