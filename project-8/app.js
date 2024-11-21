@@ -90,7 +90,16 @@ function generateRGB(color){
 	return `rgb(${red},${green}, ${blue})`
 
 }
-
+/**
+ * @param {String} hex
+ */
+function hexToRgb (hex){
+	const red = parseInt(hex.slice(0,2),16)
+	const green = parseInt(hex.slice(2,4),16)
+	const blue = parseInt(hex.slice(4),16)
+	return `rgb(${red}, ${green}, ${blue})`
+}
+console.log(hexToRgb("FFFFFE"))
 function generateToastMessage(msg) {
 	div = document.createElement('div');
 	div.innerText = msg;
