@@ -32,3 +32,18 @@ div[class^="card"] .img::before {
   background-color: #e7e7e7;
   top: 50%;
 }
+div[class^="card"] .img::after {
+  position: absolute;
+  bottom: 0px;
+  width: 70%;
+  height: 40px;
+  background-color: #be1a1a;
+  content: "";
+  right: 30px;
+  z-index: -1;
+
+  border-radius: 50%;
+  opacity: 0.2;
+  filter: blur(10px);
+  transition: 0.5s;
+}
