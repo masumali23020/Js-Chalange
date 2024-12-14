@@ -13,15 +13,18 @@ let div = null;
 
 // Step 1 - create onload handler
 window.onload = () => {
-	main();
-};
-
+// main taion all functiolity 
 function main() {
-	const root = document.getElementById('root');
-	const output = document.getElementById('output');
-	const output2 = document.getElementById('output2');
-	const changeBtn = document.getElementById('change-btn');
-	const copyBtn = document.getElementById('copy-btn');
+// dom references
+const generateRandomColorBtn = document.getElementById(
+	'generate-random-color'
+);
+const colorModeHexInp = document.getElementById('input-hex');
+const colorSliderRed = document.getElementById('color-slider-red');
+const colorSliderGreen = document.getElementById('color-slider-green');
+const colorSliderBlue = document.getElementById('color-slider-blue');
+const copyToClipboardBtn = document.getElementById('copy-to-clipboard');
+
 
 	changeBtn.addEventListener('click', function () {
 		const color = generateColorDec()
@@ -57,6 +60,37 @@ function main() {
 	})
 }
 
+// event handeler 
+
+
+
+// dom function 
+function generateToastMessage(msg) {
+	div = document.createElement('div');
+	div.innerText = msg;
+	div.className = 'toast-message toast-message-slide-in';
+
+	div.addEventListener('click', function () {
+		div.classList.remove('toast-message-slide-in');
+		div.classList.add('toast-message-slide-out');
+
+		div.addEventListener('animationend', function () {
+			div.remove();
+			div = null;
+		});
+	});
+
+	document.body.appendChild(div);
+}
+
+// utlis function 
+
+
+/**
+ * genarate and return three color retun object
+ * @returns {object}
+ */
+
 function generateColorDec (){
 	const red = Math.floor(Math.random() * 255);
 	const green = Math.floor(Math.random() * 255);
@@ -70,7 +104,11 @@ function generateColorDec (){
 
 }
 
-
+/**
+ * genarate hexCode and retun color 
+ * @param {object} color 
+ * @returns {string}
+ */
 // step 2 - random color generator function
 function generateHexColor(color) {
 	const {red, green, blue} = color
@@ -100,23 +138,7 @@ function hexToRgb (hex){
 	return `rgb(${red}, ${green}, ${blue})`
 }
 console.log(hexToRgb("FFFFFE"))
-function generateToastMessage(msg) {
-	div = document.createElement('div');
-	div.innerText = msg;
-	div.className = 'toast-message toast-message-slide-in';
 
-	div.addEventListener('click', function () {
-		div.classList.remove('toast-message-slide-in');
-		div.classList.add('toast-message-slide-out');
-
-		div.addEventListener('animationend', function () {
-			div.remove();
-			div = null;
-		});
-	});
-
-	document.body.appendChild(div);
-}
 
 /**
  * @param {String} color
