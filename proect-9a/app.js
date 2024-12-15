@@ -131,11 +131,15 @@ function generateRGB(color){
 /**
  * @param {String} hex
  */
-function hexToRgb (hex){
+function hexTodecimal  (hex){
 	const red = parseInt(hex.slice(0,2),16)
 	const green = parseInt(hex.slice(2,4),16)
 	const blue = parseInt(hex.slice(4),16)
-	return `rgb(${red}, ${green}, ${blue})`
+	return {
+		red,
+		green,
+		blue
+	}
 }
 console.log(hexToRgb("FFFFFE"))
 
