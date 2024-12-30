@@ -34,3 +34,67 @@ console.log(Array.isArray(salad))
 const [tomat, cina, has, gas, ha] = [1,2,3,4,]
 console.log(ha)
 
+const customers = [
+  {
+    id: 1,
+    f_name: "John",
+    l_name: "Doe",
+    gender: "Male",
+    married: true,
+    age: 30,
+    expense: 1000,
+    purchased: ["Shaban", "Shunu"]
+  },
+  {
+    id: 2,
+    f_name: "Jane",
+    l_name: "Smith",
+    gender: "Female",
+    married: false,
+    age: 25,
+    expense: 1500,
+    purchased: ["Vaja", "Biscit"]
+  },
+  {
+    id: 3,
+    f_name: "John",
+    l_name: "Doe",
+    gender: "Male",
+    married: true,
+    age: 30,
+    expense: 1000,
+    purchased: ["Pototo", "patroy"]
+  },
+  {
+    id: 4,
+    f_name: "Jane",
+    l_name: "Smith",
+    gender: "Female",
+    married: false,
+    age: 25,
+    expense: 1500,
+    purchased: ["Muya", "Jelapai"]
+  },
+  {
+    id: 5,
+    f_name: "John",
+    l_name: "Doe",
+    gender: "Male",
+    married: true,
+    age: 30,
+    expense: 1000,
+    purchased: ["Narikel", "Pawruti"]
+  },
+  {
+    id: 6,
+    f_name: "Jane",
+    l_name: "Smith",
+    gender: "Female",
+    married: false,
+    age: 25,
+    expense: 1500,
+    purchased: ["Moja", "Valo"]
+  },
+];
+
+
