@@ -81,7 +81,7 @@ const customers = [
     l_name: "Doe",
     gender: "Male",
     married: true,
-    age: 30,
+    age: 70,
     expense: 1000,
     purchased: ["Narikel", "Pawruti"]
   },
@@ -91,10 +91,12 @@ const customers = [
     l_name: "Smith",
     gender: "Female",
     married: false,
-    age: 25,
+    age: 65,
     expense: 1500,
     purchased: ["Moja", "Valo"]
   },
 ];
 
+const seniorCustomer = customers.filter(customer => customer.age <=50 )
+console.log(seniorCustomer)
 
